@@ -1,7 +1,8 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<time.h>
-#include "pomiar_czasu.h"
+#include "../pomiar_czasu/pomiar_czasu.h"
+
  
 const int liczba = 100000;
 
