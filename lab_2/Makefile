@@ -29,8 +29,15 @@ clone: clone.o
 	$(LOADER) $(OPT) clone.o -o clone $(LIB)
 
 # jak uzyskac plik clone.o ?
-clone.o: clone.c ../pomiar_czasu/pomiar_czasu.h
+clone.o: clone.c 
 	$(CCOMP) -c $(OPT) clone.c $(INC) 
 
+#5. dodanie nowego programu 
+clone_program: clone_program.o
+	$(LOADER) $(OPT) clone_program.o -o clone_program $(LIB)
+
+clone_program.o: clone_program.c 
+	$(CCOMP) -c $(OPT) clone_program.c $(INC)
+
 clean:
-	rm -f *.o fork clone
+	rm -f *.o fork clone clone_program
