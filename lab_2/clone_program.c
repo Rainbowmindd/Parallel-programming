@@ -70,7 +70,7 @@ int main() {
     waitpid(pid2, NULL, __WCLONE);
 
     //po zakonczeniu pracy
-    printf("Koniec pracy watkow: \n");
+    printf("\nKoniec pracy watkow: \n");
     printf("Zmienna globalna: %d\n", zmienna_globalna);
     printf("Zmienna lokalna watek 1: %d\n", zmienna_lokalna1);
     printf("Zmienna lokalna watek 2: %d\n", zmienna_lokalna2);
@@ -78,6 +78,6 @@ int main() {
    //free memory
     free(stos1);
     free(stos2);
-    
+
     return 0;
 }

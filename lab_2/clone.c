@@ -18,11 +18,17 @@ int funkcja_watku( void* argument )
 
   zmienna_globalna++;
 
+//zajecia 2 wypisuje dane
+    char arg1[] = "./zajecia2"; // Ścieżka do programu
+    char arg2[] = "Martyna Kindrat"; // Argument
+    char *arg[] = {arg1, arg2, NULL}; // Tablica argumentów
+
+    int wynik=execv(arg[0],arg);
 //wywolanie programu za pomoca execv
-  // int wynik; 
-  // wynik=execv("./program",NULL); 
-  // if(wynik==-1) {
-  // printf("Proces potomny nie wykonal programu\n"); }
+ //  int wynik; 
+ //  wynik=execv("./program",NULL); 
+   if(wynik==-1) {
+   printf("Proces potomny nie wykonal programu\n"); }
 
   return 0;
 }

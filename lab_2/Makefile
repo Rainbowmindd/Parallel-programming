@@ -39,5 +39,12 @@ clone_program: clone_program.o
 clone_program.o: clone_program.c 
 	$(CCOMP) -c $(OPT) clone_program.c $(INC)
 
+# zaleznosci i komendy dla zajecia2
+zajecia2: zajecia2.o
+	$(LOADER) $(OPT) zajecia2.o -o zajecia2
+
+zajecia2.o: zajecia2.c
+	$(CCOMP) -c $(OPT) zajecia2.c 
+
 clean:
-	rm -f *.o fork clone clone_program
+	rm -f *.o fork clone clone_program zajecia2
