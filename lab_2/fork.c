@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-//#include"pomiar_czasu.h"
+#include "../pomiar_czasu/pomiar_czasu.h"
 
 int zmienna_globalna=0;
 
@@ -12,24 +12,25 @@ int main(){
   
   int pid, wynik, i;
 
-  //inicjuj_czas();
+  inicjuj_czas();
   
   for(i=0;i<1000;i++){
     
-    pid = fork(); 			
+    pid = fork(); 	//tworzenie nowego procesu		
     
     if(pid==0){ 			
       
       zmienna_globalna++;
 
-      //char arg1[] = "/bin/ls";
-      //char arg2[] = ".";
-      //char* arg[] = {arg1,arg2,NULL};
-      //char* arg[] = {"/bin/ls",".",NULL};
-      //wynik=execv("/bin/ls",arg); 
+      char arg1[] = "/bin/ls";
+      char arg2[] = ".";
+      char* arg[] = {arg1,arg2,NULL};
+    //  char* arg[] = {"/bin/ls",".",NULL};
+
+      wynik=execv("/bin/ls",arg); 
       //wynik=execv("./program",NULL); 
-      /* if(wynik==-1) */
-      /*     printf("Proces potomny nie wykonal programu\n"); */
+      if(wynik==-1) 
+         printf("Proces potomny nie wykonal programu\n"); 
 
       exit(0);
       
@@ -41,7 +42,7 @@ int main(){
     
   }
 
-  //drukuj_czas();
+  drukuj_czas();
   
 }
 

@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <sched.h>
 #include <linux/sched.h>
+#include "../pomiar_czasu/pomiar_czasu.h" 
 
 int zmienna_globalna=0;
 
@@ -17,10 +18,11 @@ int funkcja_watku( void* argument )
 
   zmienna_globalna++;
 
-  /* int wynik; */
-  /* wynik=execv("./program",NULL); */
-  /* if(wynik==-1) */
-  /*   printf("Proces potomny nie wykonal programu\n"); */
+//wywolanie programu za pomoca execv
+  int wynik; 
+  wynik=execv("./program",NULL); 
+  if(wynik==-1) {
+  printf("Proces potomny nie wykonal programu\n"); }
 
   return 0;
 }
@@ -31,21 +33,28 @@ int main()
   void *stos;
   pid_t pid;
   int i; 
+
+  inicjuj_czas(); //pomiar start
   
-  stos = malloc( ROZMIAR_STOSU );
-  if (stos == 0) {
-    printf("Proces nadrzędny - blad alokacji stosu\n");
-    exit( 1 );
-  }
+ 
 
   for(i=0;i<1000;i++){
 
+    //alokacja stosu dla kazdego watku
+    stos = malloc( ROZMIAR_STOSU );
+
+    if (stos == 0) {
+      printf("Proces nadrzędny - blad alokacji stosu\n");
+      exit( 1 );
+    }
+
+    //tworzneie watku przy pomocy clone
     pid = clone( &funkcja_watku, (void *) stos+ROZMIAR_STOSU, 
 		 CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, 0 );
 
-    waitpid(pid, NULL, __WCLONE);
-
+    waitpid(pid, NULL, __WCLONE); //oczekiwanie na zakonczenie watku
+    free( stos );
   }
 
-  free( stos );
+  return 0;
 }
