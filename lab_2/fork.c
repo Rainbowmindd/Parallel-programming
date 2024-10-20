@@ -22,12 +22,12 @@ int main(){
       
       zmienna_globalna++;
 
-      char arg1[] = "./zajecia2";
-      char arg2[] = "Martyna Kindrat";
-      char* arg[] = {arg1,arg2,NULL};
+    //  char arg1[] = "./zajecia2";
+    //  char arg2[] = "Martyna Kindrat";
+    //  char* arg[] = {arg1,arg2,NULL};
       
 
-       wynik=execv(arg[0],arg);  //uruchomienie zajecia2
+   //    wynik=execv(arg[0],arg);  //uruchomienie zajecia2
 
       // char* arg[] = {"/bin/ls",".",NULL};
       // wynik=execv("./program",NULL);  //uruchomienie zajecia2.c

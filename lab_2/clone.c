@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <sched.h>
 #include <linux/sched.h>
+#include "../pomiar_czasu/pomiar_czasu.h"
 
 
 int zmienna_globalna=0;
@@ -19,16 +20,16 @@ int funkcja_watku( void* argument )
   zmienna_globalna++;
 
 //zajecia 2 wypisuje dane
-    char arg1[] = "./zajecia2"; // Ścieżka do programu
-    char arg2[] = "Martyna Kindrat"; // Argument
-    char *arg[] = {arg1, arg2, NULL}; // Tablica argumentów
+//    char arg1[] = "./zajecia2"; // Ścieżka do programu
+ //   char arg2[] = "Martyna Kindrat"; // Argument
+//    char *arg[] = {arg1, arg2, NULL}; // Tablica argumentów
 
-    int wynik=execv(arg[0],arg);
+//    int wynik=execv(arg[0],arg);
 //wywolanie programu za pomoca execv
  //  int wynik; 
  //  wynik=execv("./program",NULL); 
-   if(wynik==-1) {
-   printf("Proces potomny nie wykonal programu\n"); }
+ //  if(wynik==-1) {
+  // printf("Proces potomny nie wykonal programu\n"); //}
 
   return 0;
 }
@@ -40,13 +41,8 @@ int main()
   pid_t pid;
   int i; 
 
-  inicjuj_czas(); //pomiar start
   
- 
-
-  for(i=0;i<1000;i++){
-
-    //alokacja stosu dla kazdego watku
+  //alokacja stosu dla kazdego watku
     stos = malloc( ROZMIAR_STOSU );
 
     if (stos == 0) {
@@ -54,13 +50,21 @@ int main()
       exit( 1 );
     }
 
+    inicjuj_czas(); //pomiar start
+
+  for(i=0;i<1000;i++){
+
+    
+ 
+
     //tworzneie watku przy pomocy clone
     pid = clone( &funkcja_watku, (void *) stos+ROZMIAR_STOSU, 
 		 CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, 0 );
 
     waitpid(pid, NULL, __WCLONE); //oczekiwanie na zakonczenie watku
-    free( stos );
+    
   }
-
+  drukuj_czas();
+free( stos );
   return 0;
 }
