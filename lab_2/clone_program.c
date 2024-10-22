@@ -14,12 +14,21 @@ int zmienna_globalna=0;
 
 //5. nowy program na podstawie clone.c
 int funkcja_watku(void *argument) {
-    
+     int zmienna_lokalna = *((int*) argument); //zmienna_lokalna przekazana jako argument
+
+    for(int i=0;i<LICZBA_ITERACJI;i++){
+        zmienna_globalna++;
+        zmienna_lokalna++;
+    }
+     printf("Zmienna globalna w funkcji: %d\n", zmienna_globalna);
+     printf("Zmienna lokalna w funkcji: %d\n", zmienna_lokalna);
+
 }
 
 int main() {
     void *stos1, *stos2; //stosy dla watkow
     pid_t pid1, pid2;  //watek ID
+    
      
  
     //alokacja stosu watek 1
@@ -36,9 +45,11 @@ int main() {
         free(stos1);
         exit(1);
     }
+    int zmienna_lokalna1=0;
+    int zmienna_lokalna2=0;
 
     //tworzenie watku1
-    pid1 = clone(funkcja_watku, (void *)stos1 + ROZMIAR_STOSU, CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, 0);
+    pid1 = clone(funkcja_watku, (void *)stos1 + ROZMIAR_STOSU, CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, &zmienna_lokalna1);
     if (pid1 == -1) {
         printf("Blad tworzenia watku \n");
         free(stos1);
@@ -47,7 +58,7 @@ int main() {
     }
 
     //tworzenie watku2
-    pid2 = clone(funkcja_watku, (void *)stos2 + ROZMIAR_STOSU, CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, 0);
+    pid2 = clone(funkcja_watku, (void *)stos2 + ROZMIAR_STOSU, CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM,&zmienna_lokalna2);
     if(pid2 == -1) {
         printf("Blad tworzenia watku \n");
         free(stos1);
@@ -61,6 +72,9 @@ int main() {
 
     //po zakonczeniu pracy
     printf("Koniec pracy watkow \n");
+    printf("Zmienna globalna: %d\n", zmienna_globalna);
+    printf("Zmienna lokalna wątek 1: %d\n", zmienna_lokalna1);
+    printf("Zmienna lokalna wątek 2: %d\n", zmienna_lokalna2);
 
    //free memory
     free(stos1);
