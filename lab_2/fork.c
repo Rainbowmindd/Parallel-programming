@@ -8,7 +8,7 @@
 
 int zmienna_globalna=0;
 
-int main(){
+int main(int argc, char* argv[]){
   
   int pid, wynik, i;
 
@@ -22,15 +22,16 @@ int main(){
       
       zmienna_globalna++;
 
-    //  char arg1[] = "./zajecia2";
-    //  char arg2[] = "Martyna Kindrat";
-    //  char* arg[] = {arg1,arg2,NULL};
-      
+//wersja 1
+      // char arg1[]="./zajecia2";
+      // char arg2[]="Martyna";
+      // char arg3[]="Kindrat";
+      // char* arg[] = {arg1,arg2,arg3,NULL};
+      // wynik=execv("./zajecia2",arg); 
+//wersja 2
+       char* arg[] = {"./zajecia2", argv[1], argv[2], NULL};
+      wynik = execv("./zajecia2", arg);
 
-   //    wynik=execv(arg[0],arg);  //uruchomienie zajecia2
-
-      // char* arg[] = {"/bin/ls",".",NULL};
-      // wynik=execv("./program",NULL);  //uruchomienie zajecia2.c
       if(wynik==-1) 
          printf("Proces potomny nie wykonal programu\n"); 
 
