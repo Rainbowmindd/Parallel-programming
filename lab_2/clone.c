@@ -14,25 +14,18 @@ int zmienna_globalna=0;
 
 #define ROZMIAR_STOSU 1024*64
 
-int funkcja_watku( void* argument )
-{
+int funkcja_watku(void* argument) {
+    zmienna_globalna++; 
 
-  zmienna_globalna++;
+    char* arg[] = {"./zajecia2", "Martyna", "Kindrat", NULL}; 
+    int wynik = execv(arg[0], arg); 
+    if (wynik == -1) {
+        printf("Proces potomny nie wykonal programu\n"); 
+    }
 
-//zajecia 2 wypisuje dane
-//    char arg1[] = "./zajecia2"; // Ścieżka do programu
- //   char arg2[] = "Martyna Kindrat"; // Argument
-//    char *arg[] = {arg1, arg2, NULL}; // Tablica argumentów
-
-//    int wynik=execv(arg[0],arg);
-//wywolanie programu za pomoca execv
- //  int wynik; 
- //  wynik=execv("./program",NULL); 
- //  if(wynik==-1) {
-  // printf("Proces potomny nie wykonal programu\n"); //}
-
-  return 0;
+    return 0;
 }
+
 
 int main()
 {
@@ -53,9 +46,6 @@ int main()
     inicjuj_czas(); //pomiar start
 
   for(i=0;i<1000;i++){
-
-    
- 
 
     //tworzneie watku przy pomocy clone
     pid = clone( &funkcja_watku, (void *) stos+ROZMIAR_STOSU, 

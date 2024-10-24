@@ -17,17 +17,17 @@ INC = -I../pomiar_czasu
 LIB = -L../pomiar_czasu -lm
 
 # zaleznosci i komendy
-moj_program: moj_program.o #pomiar_czasu.o
+moj_program: moj_program.o pomiar_czasu.o
 	$(LOADER) $(OPT) moj_program.o -o moj_program $(LIB)
 
 # jak uzyskac plik moj_program.o ?
 moj_program.o: moj_program.c ../pomiar_czasu/pomiar_czasu.h
-	$(CCOMP) -c $(OPT) moj_program.c
+	$(CCOMP) -c $(OPT) moj_program.c $(INC)
 	
 
 
-#pomiar_czasu.o: pomiar_czasu.c pomiar_czasu.h
-	#$(CCOMP) -c $(OPT) pomiar_czasu.c
+pomiar_czasu.o: ../pomiar_czasu/pomiar_czasu.c ../pomiar_czasu/pomiar_czasu.h
+	$(CCOMP) -c $(OPT) ../pomiar_czasu/pomiar_czasu.c $(INC)
 
 clean:
-	rm -f *.o moj_program
+	rm -f *.o moj_program pomiar_czasu.o

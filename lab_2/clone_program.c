@@ -8,41 +8,30 @@
 #include <linux/sched.h>
 
 #define ROZMIAR_STOSU 1024 * 64
-#define LICZBA_ITERACJI 100000
-
 int zmienna_globalna=0;
 
-//5. nowy program na podstawie clone.c
 int funkcja_watku(void *argument) {
-     int zmienna_lokalna = *((int*) argument); //zmienna_lokalna przekazana jako argument
+     int zmienna_lokalna = *((int*) argument); 
 
-    for(int i=0;i<LICZBA_ITERACJI;i++){
+    for(int i=0;i<100000;i++){
         zmienna_globalna++;
         zmienna_lokalna++;
     }
-     printf("Zmienna globalna w funkcji: %d\n", zmienna_globalna);
-     printf("Zmienna lokalna w funkcji: %d\n", zmienna_lokalna);
+    printf("Koniec pracy watku: \n Zmienna globalna: %d\n Zmienna lokalna:  %d\n",zmienna_globalna,zmienna_lokalna);
 
+    return 0;
 }
 
 int main() {
     void *stos1, *stos2; //stosy dla watkow
     pid_t pid1, pid2;  //watek ID
-    
-     
  
     //alokacja stosu watek 1
     stos1 = malloc(ROZMIAR_STOSU);
-    if(stos1 == NULL) {
-        printf("Blad alokacji stosu dla watku\n");
-        exit(1);
-    } 
-
     //alokacja stosu watek 2
     stos2 = malloc(ROZMIAR_STOSU);
-    if(stos2 == NULL) {
+    if(stos1 ==NULL || stos2 == NULL) {
         printf("Blad alokacji stosu dla watku\n");
-        free(stos1);
         exit(1);
     }
     int zmienna_lokalna1=0;
@@ -50,7 +39,7 @@ int main() {
 
     //tworzenie watku1
     pid1 = clone(funkcja_watku, (void *)stos1 + ROZMIAR_STOSU, CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, &zmienna_lokalna1);
-    if (pid1 == -1) {
+    if (pid1 == -1) { //jeśli pid==-1 sygnał że tworzenie watku nie powiodło się
         printf("Blad tworzenia watku \n");
         free(stos1);
         free(stos2);
@@ -71,10 +60,7 @@ int main() {
     waitpid(pid2, NULL, __WCLONE);
 
     //po zakonczeniu pracy
-    printf("Koniec pracy watkow \n");
-    printf("Zmienna globalna: %d\n", zmienna_globalna);
-    printf("Zmienna lokalna wątek 1: %d\n", zmienna_lokalna1);
-    printf("Zmienna lokalna wątek 2: %d\n", zmienna_lokalna2);
+    printf("Koniec pracy OBU wątkow \nZmienna globalna: %d\n Zmienna lokalna1: %d\n Zmienna lokalna2: %d\n",zmienna_globalna,zmienna_lokalna1,zmienna_lokalna2);
 
    //free memory
     free(stos1);
