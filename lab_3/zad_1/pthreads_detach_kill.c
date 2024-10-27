@@ -34,7 +34,7 @@ void * zadanie_watku (void * arg_wsk)
 	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
 	printf("\twatek potomny: uniemozliwione zabicie\n");
 
-	czasozajmowacz(); //wykonuje watek 3
+	czasozajmowacz(); 
 
 	printf("\twatek potomny: umozliwienie zabicia\n");
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
@@ -69,9 +69,9 @@ int main()
 
 	//Co nalezy zrobic przed sprawdzeniem czy watki sie skonczyly?
     //trzeba poczekac na zakonczenie watku
-    pthread_join(tid,&wynik); //pierwsze sprawdzenie wartosci wynik
+    pthread_join(tid,&wynik);
 
-	if (wynik == PTHREAD_CANCELED) //drugie sprawdzenie wartosci wynik
+	if (wynik == PTHREAD_CANCELED) 
 		printf("\twatek glowny: watek potomny zostal zabity\n");
 	else
 		printf("\twatek glowny: watek potomny NIE zostal zabity - blad\n");
