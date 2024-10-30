@@ -83,10 +83,12 @@ void * watek_klient (void * arg_wsk){
     printf("\nKlient %d, wybieram kufel\n", moj_id); 
     usleep(1);
 
-    pthread_mutex_lock(&mutex);  //blokowanie dostepu do zmiennej
+    
 
     if(dostepne_kufle>0){
+       pthread_mutex_lock(&mutex);  //blokowanie dostepu do zmiennej
         dostepne_kufle--;
+        pthread_mutex_unlock(&mutex); //odblokowanie dostepu do zmiennej
         success=1; //udalo sie pobrac kufel
         printf("\nAktualnie zuzyto %d kufli\n",dostepne_kufle);
 
@@ -96,7 +98,7 @@ void * watek_klient (void * arg_wsk){
     }
     //sekcja krytyczna-pobranie kufla
     
-    pthread_mutex_unlock(&mutex); //odblokowanie dostepu do zmiennej
+    
     if (!success) {
                 usleep(100); //odciazenie cpu
             }
