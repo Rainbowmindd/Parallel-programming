@@ -92,6 +92,17 @@ void * watek_klient (void * arg_wsk){
         success=1; //udalo sie pobrac kufel
         printf("\nAktualnie zuzyto %d kufli\n",dostepne_kufle);
 
+
+       printf("\nKlient %d, pije\n", moj_id); 
+      nanosleep((struct timespec[]){{0, 50000000L}}, NULL);
+    
+      printf("\nKlient %d, odkladam kufel\n", moj_id); 
+
+
+      pthread_mutex_lock(&mutex); //znowu blokujemy dostep
+      dostepne_kufle++; //sekcja krytyczna, odkladanie kufla
+      pthread_mutex_unlock(&mutex);
+
     } else{
       usleep(1);
       printf("\nKlient %d, brak wolnych kufli, oczekiwanie...\n", moj_id);
@@ -115,15 +126,7 @@ void * watek_klient (void * arg_wsk){
     // usleep(30);
 
 
-    printf("\nKlient %d, pije\n", moj_id); 
-    nanosleep((struct timespec[]){{0, 50000000L}}, NULL);
-    
-    printf("\nKlient %d, odkladam kufel\n", moj_id); 
-
-
-    pthread_mutex_lock(&mutex); //znowu blokujemy dostep
-    dostepne_kufle++; //sekcja krytyczna, odkladanie kufla
-    pthread_mutex_unlock(&mutex);
+   
 
     }
     
