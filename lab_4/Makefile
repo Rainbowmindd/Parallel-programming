@@ -17,12 +17,12 @@ OPT = -g -DDEBUG
 #LIB = -L../pomiar_czasu -lpomiar_czasu -lm
 
 # zaleznosci i komendy
-# pub_sym_0: pub_sym_0.o 
-# 	$(LOADER) $(OPT) pub_sym_0.o -o pub_sym_0
+pub_sym_0: pub_sym_0.o 
+	$(LOADER) $(OPT) pub_sym_0.o -o pub_sym_0
 
 
-# pub_sym_0.o: pub_sym_0.c 
-# 	$(CCOMP) -c $(OPT) pub_sym_0.c  
+pub_sym_0.o: pub_sym_0.c 
+	$(CCOMP) -c $(OPT) pub_sym_0.c  
 	
 pub_sym_1: pub_sym_1.o 
 	$(LOADER) $(OPT) pub_sym_1.o -o pub_sym_1
