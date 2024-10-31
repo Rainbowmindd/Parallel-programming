@@ -7,6 +7,7 @@
 #define ILE_MUSZE_WYPIC 3
 //pub_sym_1 -> zabezpieczenia mutex 
 //klient to watek
+//do while zanim wybierzemy sprawdzamy czy mozna go wybrac
 void * watek_klient (void * arg);
 
 int l_kf; //liczba kufli
@@ -14,8 +15,10 @@ int dostepne_kufle; //zmienna wspolna dla wszystkich watkow
 
 //deklaracja mutexu
 pthread_mutex_t mutex;
+pthread_mutex_t mutex1;
 
 int main( void ){
+  srand(time(NULL));
 
   pthread_t *tab_klient;
   int *tab_klient_id;
@@ -28,7 +31,7 @@ int main( void ){
 
   dostepne_kufle=l_kf;
   //printf("\nLiczba kranow: "); scanf("%d", &l_kr);
- // l_kr = 1000000000; // wystarczajaco duzo, zeby nie bylo rywalizacji 
+  l_kr = 1; // wystarczajaco duzo, zeby nie bylo rywalizacji 
 
   tab_klient = (pthread_t *) malloc(l_kl*sizeof(pthread_t));
   tab_klient_id = (int *) malloc(l_kl*sizeof(int));
@@ -91,7 +94,12 @@ void * watek_klient (void * arg_wsk){
         pthread_mutex_unlock(&mutex); //odblokowanie dostepu do zmiennej
         success=1; //udalo sie pobrac kufel
         printf("\nAktualnie zuzyto %d kufli\n",dostepne_kufle);
-
+         
+         pthread_mutex_lock(&mutex1);
+         j=0;//nr kranu
+        printf("\nKlient %d, nalewam z kranu %d\n", moj_id, j); 
+        usleep(30);
+        pthread_mutex_unlock(&mutex1);
 
        printf("\nKlient %d, pije\n", moj_id); 
       nanosleep((struct timespec[]){{0, 50000000L}}, NULL);
@@ -104,7 +112,8 @@ void * watek_klient (void * arg_wsk){
       pthread_mutex_unlock(&mutex);
 
     } else{
-      usleep(1);
+      int wait= rand() % 3;
+      usleep(wait);
       printf("\nKlient %d, brak wolnych kufli, oczekiwanie...\n", moj_id);
     }
     //sekcja krytyczna-pobranie kufla

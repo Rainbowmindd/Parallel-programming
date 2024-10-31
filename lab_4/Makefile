@@ -35,5 +35,11 @@ pub_sym_2: pub_sym_2.o
 
 pub_sym_2.o: pub_sym_2.c 
 	$(CCOMP) -c $(OPT) pub_sym_2.c 
+
+pub_sym_3: pub_sym_3.o 
+	$(LOADER) $(OPT) pub_sym_3.o -o pub_sym_3
+
+pub_sym_2.o: pub_sym_3.c 
+	$(CCOMP) -c $(OPT) pub_sym_3.c
 clean:
-	rm -f *.o pub_sym_1 pub_sym_2
+	rm -f *.o pub_sym_1 pub_sym_2 pub_sym_3
