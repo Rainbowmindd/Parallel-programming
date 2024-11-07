@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.kit": "html",
+		"pomiar_czasu.h": "c"
+	}
+}
