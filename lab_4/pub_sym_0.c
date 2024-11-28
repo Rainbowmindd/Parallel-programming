@@ -61,7 +61,7 @@ int main( void ){
 
 
 }
-
+//kod pomiedzy
 
 void * watek_klient (void * arg_wsk){
 

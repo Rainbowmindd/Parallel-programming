@@ -101,7 +101,7 @@ void * watek_klient (void * arg_wsk){
       usleep(30);
     pthread_mutex_unlock(&mutex1);
 
-
+//klient pije
     printf("\nKlient %d, pije\n", moj_id); 
     nanosleep((struct timespec[]){{0, 50000000L}}, NULL);
     
@@ -124,3 +124,86 @@ void * watek_klient (void * arg_wsk){
   return(NULL);
 } 
 
+void * watek_klient(void * arg_wsk) {
+    int moj_id = *((int *)arg_wsk);
+    int i, j;
+    int ile_musze_wypic = ILE_MUSZE_WYPIC;
+
+    for (i = 0; i < ILE_MUSZE_WYPIC; i++) {
+        int wait_time = rand() % 3 + 1; //losujemy czas oczekiwania
+        int success = 0;
+
+        // Aktywne czekanie na wolny kufel
+        do {
+            pthread_mutex_lock(&mutex);
+            if (dostepne_kufle > 0) {
+                // klient pobiera kufel
+                dostepne_kufle--;
+                pthread_mutex_unlock(&mutex);   //odblokowanie dostepu
+                success = 1; // sukces – kufel dostępny
+
+                // klient nalewa z kranu
+                pthread_mutex_lock(&mutex1);
+                j=0;
+                usleep(30);
+                pthread_mutex_unlock(&mutex1);
+
+                // klient pije
+                nanosleep((struct timespec[]){{0, 50000000L}}, NULL);
+
+                // klient odklada kufel
+                pthread_mutex_lock(&mutex);
+                dostepne_kufle++;
+            } 
+            pthread_mutex_unlock(&mutex);
+            
+            if (!success) {
+                sleep(wait_time);   // Oczekiwanie na dostępny kufel
+                wait_time = rand() % 3 + 1; // Aktualizacja czasu 
+            }
+            } while (!success);
+    }
+    return NULL;
+}    
+
+void * watek_klient(void * arg_wsk) {
+    int moj_id = *((int *)arg_wsk);
+    int i, j;
+    int wykonana_praca = 0;
+    int ile_musze_wypic = ILE_MUSZE_WYPIC;
+
+    for (i = 0; i < ILE_MUSZE_WYPIC; i++) {
+        int wait_time = rand() % 3 + 1; // losujenmy czas oczekiwania
+        int success = 0;
+
+        // Aktywne czekanie- busy waiting na wolny kufel
+        do {
+            if (pthread_mutex_trylock(&mutex) == 0){
+                if (dostepne_kufle > 0) {
+                    // klient pobiera kufel
+                    wolne_kufle--;
+                    pthread_mutex_unlock(&mutex);
+                    success = 1; // sukces-istnieje dostępny kufel
+                    
+                    // nalewaniez kranu
+                    pthread_mutex_lock(&mutex1);
+                    j=0;
+                    usleep(30);
+                    pthread_mutex_unlock(&mutex1);
+
+                    // klient pije
+                    nanosleep((struct timespec[]){{0, 50000000L}},NULL);
+
+                    // klient odklada kufel
+                    pthread_mutex_lock(&mutex);
+                    dostepne_kufle+;
+                }
+                    pthread_mutex_unlock(&mutex);
+            }
+            if (!success) {
+                wykonana_praca ++;
+            }
+            } while (!success);
+    }
+    return NULL;
+}

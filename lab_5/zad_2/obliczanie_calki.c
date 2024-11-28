@@ -29,15 +29,15 @@ int main( int argc, char *argv[] ){
   printf("\nProgram obliczania całki z funkcji (sinus) metodą trapezów.\n");
 
   a = 0.0;
-  //printf("\nPodaj lewy kraniec przedziału całkowania: "); scanf("%lf", &a);
+  printf("\nPodaj lewy kraniec przedziału całkowania: "); scanf("%lf", &a);
 
   b = M_PI;
-  //printf("\nPodaj prawy kraniec przedziału całkowania: "); scanf("%lf", &b);
+  printf("\nPodaj prawy kraniec przedziału całkowania: "); scanf("%lf", &b);
 
-  printf("\nPodaj wysokość pojedynczego trapezu:  "); scanf("%lf", &dx);
+  printf("\nPodaj wysokość pojedynczego trapezu:  "); scanf("%lf", &dx); //pobieramy dx
 
   int l_w=0;
-  //printf("\nPodaj liczbę wątków:  "); scanf("%d", &l_w);
+  printf("\nPodaj liczbę wątków:  "); scanf("%d", &l_w);
 
   printf("\nPoczatek obliczeń sekwencyjnych\n");
   t1 = czas_zegara();
@@ -48,14 +48,14 @@ int main( int argc, char *argv[] ){
   printf("\nKoniec obliczen sekwencyjnych\n");
   printf("\tCzas wykonania %lf. \tObliczona całka = %.15lf\n", t1, calka);
 
-  // printf("\nPoczatek obliczeń równoległych (zrównoleglenie pętli)\n");
-  // t1 = czas_zegara();
+  printf("\nPoczatek obliczeń równoległych (zrównoleglenie pętli)\n");
+  t1 = czas_zegara();
 
-  // calka = calka_zrownoleglenie_petli(a, b, dx, l_w);
+  calka = calka_zrownoleglenie_petli(a, b, dx, l_w);
 
-  // t1 = czas_zegara() - t1;
-  // printf("\nKoniec obliczen  równoległych (zrównoleglenie pętli) \n");
-  // printf("\tCzas wykonania %lf. \tObliczona całka = %.15lf\n", t1, calka);
+  t1 = czas_zegara() - t1;
+  printf("\nKoniec obliczen  równoległych (zrównoleglenie pętli) \n");
+  printf("\tCzas wykonania %lf. \tObliczona całka = %.15lf\n", t1, calka);
 
   // printf("\nPoczatek obliczeń równoległych (dekompozycja obszaru)\n");
   // t1 = czas_zegara();
