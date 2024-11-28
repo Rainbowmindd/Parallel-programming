@@ -20,7 +20,7 @@ void bariera(void){
     waiting_threads++;
 
     if (waiting_threads < thread_count){
-        pthread_cond_wait(&barrier_cond, &barrier_mutex);   //oczekiwanie na pozostałe watki
+        pthread_cond_wait(&barrier_cond, &barrier_mutex);   //oczekiwanie na pozostałe watki, czeka na sygnal
     } else {
         //ostatni watek - reset licznika i budzi pozostale watki
         waiting_threads = 0;

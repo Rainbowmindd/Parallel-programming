@@ -29,7 +29,7 @@ int main( int argc, char *argv[] ){
   //czekanie na zakonczenie watkow
   for(int i = 0; i < LICZBA_W; i++ ) pthread_join(watki[i], NULL);
 
-  // walnianie zasobow bariery
+  //zwalnianie zasobow bariery
   bariera_destroy();
 
   pthread_exit(NULL);  
