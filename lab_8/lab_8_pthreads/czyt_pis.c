@@ -5,6 +5,8 @@
 
 #include "czytelnia.h"
 
+
+
 void *funkcja_czytelnika(void *);
 void *funkcja_pisarza(void *);
 
