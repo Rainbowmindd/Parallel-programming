@@ -37,7 +37,7 @@ int main ()
 
   double suma_parallel=0.0;
 
-//zad3
+//zad3 - default(none) wymusza okreslenie jawnosci zmiennych
 #pragma omp parallel for default(none) shared(a) reduction(+:suma_parallel) ordered 
 //zad5
 //1- (static, 3)  iteracje w porcjach po 3, jesli liczba iteracji nie jest podzielna przez 3 to pozostale iteracje sa rozdzielane w kolejnosci
