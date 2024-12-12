@@ -27,7 +27,7 @@ int main(){
     
   
 #pragma omp parallel default(none) shared(a_shared, e_atomic) private(b_private) firstprivate(c_firstprivate )
-  {
+  {  //kazdy watek dostaje swoja lokalna kopie zmiennej c_firstprivate
     int i;
     int d_local_private;
     int temp=a_shared;
@@ -40,9 +40,9 @@ int main(){
     
 
     //1. rozwiazanie:
-    #pragma omp parallel for reduction(+: a_shared)
+    #pragma omp for reduction(+: a_shared)
     for(i=0;i<10;i++){
-      a_shared ++;  //1. RAW, WAW: jednoczesnie modyfikowana przez wszystkie watki
+      a_shared ++;  //1. RMW, RAW, WAW: jednoczesnie modyfikowana przez wszystkie watki
     }
 
     for(i=0;i<10;i++){
@@ -51,7 +51,7 @@ int main(){
 
     for(i=0;i<10;i++){
       //4. rozwiazanie:
-      #pragma omp atomic
+      #pragma omp atomic //sekcja krytyczna
       e_atomic+=omp_get_thread_num();//4. RAW, WAW brak synchronizcaji, modyfikowana przez wszystkie watki 
     }
     
@@ -61,7 +61,7 @@ int main(){
 	     omp_get_num_threads(), omp_get_thread_num());
       
       printf("\ta_shared \t= %d\n", a_shared);
-      printf("\tb_private \t= %d\n", b_private); //2. WAR: brak inicjalizacji zmiennej w seksji rownoleglej 
+      printf("\tb_private \t= %d\n", b_private); //2. WAR: brak inicjalizacji zmiennej w sekcji rownoleglej 
       printf("\tc_firstprivate \t= %d\n", c_firstprivate); 
       printf("\td_local_private = %d\n", d_local_private);
       printf("\te_atomic \t= %d\n", e_atomic);
