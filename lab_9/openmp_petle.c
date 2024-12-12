@@ -27,16 +27,16 @@ int main ()
 
 
   //dekompozycja wierszowa
-//   double suma_wierszowa = 0.0;
-//   #pragma omp parallel for default(none) shared(a) schedule (static,2)  reduction(+:suma_wierszowa) ordered
-//   for (int i = 0; i < WYMIAR; i++) {
-//     for (int j = 0; j < WYMIAR; j++){
-//       suma_wierszowa += a[i][j];
+  // double suma_wierszowa = 0.0;
+  // #pragma omp parallel for default(none) shared(a) schedule (static,2)  reduction(+:suma_wierszowa) ordered
+  // for (int i = 0; i < WYMIAR; i++) {
+  //   for (int j = 0; j < WYMIAR; j++){
+  //     suma_wierszowa += a[i][j];
 
-//       #pragma omp ordered
-//       printf("a [%1d,%1d] - W_%1d \n", i, j, omp_get_thread_num());
-//     }
-//   }
+  //     #pragma omp ordered
+  //     printf("a [%1d,%1d] - W_%1d \n", i, j, omp_get_thread_num());
+  //   }
+  // }
 
   // printf("Suma wyrazow tablicy rownolegle (dekompozycja wierszowa): %lf\n\n", suma_wierszowa);
 
