@@ -23,7 +23,7 @@ int main ()
   
  printf("Suma wyrazow tablicy sekwencyjnie: %lf\n", suma);
 
-  //omp_set_nested(1);//ustawienie opcji dla zagniezdzonych petli, zagniezdzenie rownolegle , 0 to domyslna wartosc
+  omp_set_nested(1);//ustawienie opcji dla zagniezdzonych petli, zagniezdzenie rownolegle , 0 to domyslna wartosc
 
 
   //dekompozycja wierszowa
@@ -41,19 +41,19 @@ int main ()
   // printf("Suma wyrazow tablicy rownolegle (dekompozycja wierszowa): %lf\n\n", suma_wierszowa);
 
 // // dekompozycja kolumnowa
-//   omp_set_nested(1);
-//   double suma_kolumnowa = 0.0;
-//   #pragma omp parallel for default(none) shared(a)  schedule(dynamic) reduction(+:suma_kolumnowa) ordered
-//   for (int j = 0; j < WYMIAR; j++) {
-//     for (int i = 0; i < WYMIAR; i++){
-//       suma_kolumnowa += a[i][j];
+  omp_set_nested(1);
+  double suma_kolumnowa = 0.0;
+  #pragma omp parallel for default(none) shared(a)  schedule(dynamic) reduction(+:suma_kolumnowa) ordered
+  for (int j = 0; j < WYMIAR; j++) {
+    for (int i = 0; i < WYMIAR; i++){
+      suma_kolumnowa += a[i][j];
 
-//       #pragma omp ordered
-//       printf("a [%1d,%1d] - W_%1d \n", i, j, omp_get_thread_num());
-//     }
-//   }
+      #pragma omp ordered
+      printf("a [%1d,%1d] - W_%1d \n", i, j, omp_get_thread_num());
+    }
+  }
 
-//   printf("Suma wyrazow tablicy rownolegle (dekompozycja kolumnowa): %lf\n", suma_kolumnowa);
+  printf("Suma wyrazow tablicy rownolegle (dekompozycja kolumnowa): %lf\n", suma_kolumnowa);
 
 // dekompozycja kolumnowa
   omp_set_nested(1);

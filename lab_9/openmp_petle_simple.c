@@ -38,7 +38,7 @@ int main ()
   double suma_parallel=0.0;
 
 //zad3 - default(none) wymusza okreslenie jawnosci zmiennych
-#pragma omp parallel for default(none) shared(a) reduction(+:suma_parallel) ordered 
+// #pragma omp parallel for default(none) shared(a) reduction(+:suma_parallel) ordered 
 //zad5
 //1- (static, 3)  iteracje w porcjach po 3, jesli liczba iteracji nie jest podzielna przez 3 to pozostale iteracje sa rozdzielane w kolejnosci
 // #pragma omp parallel for default(none) shared(a) schedule (static, 3) reduction (+ : suma_parallel) ordered 
@@ -50,7 +50,7 @@ int main ()
 // #pragma omp parallel for default(none) shared(a) schedule(dynamic,2) reduction (+: suma_parallel) ordered
 
 //4 (dynamic) domyslny rozmiar porcji 1, dynamicznie przydzielane iteracje, watek bierze jedna->konczy, bierze nastepna itp
-// #pragma omp parallel for default(none) shared(a) schedule (dynamic) reduction (+: suma_parallel) ordered
+#pragma omp parallel for default(none) shared(a) schedule (dynamic) reduction (+: suma_parallel) ordered
 
   for(int i=0;i<WYMIAR;i++) {
     int id_w = omp_get_thread_num();
