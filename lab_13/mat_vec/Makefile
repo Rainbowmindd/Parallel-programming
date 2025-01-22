@@ -46,7 +46,7 @@ mat_vec_row_MPI.o: mat_vec_row_MPI.c
 #	$(CCOMP) -c $(OPT) pomiar_czasu.c
 
 run:
-	$(MPIRUN) -np 4  ./mat_vec_row_MPI
+	$(MPIRUN) -np 2  ./mat_vec_row_MPI
 
 clean:
 	rm -f *.o ./mat_vec_row_MPI
