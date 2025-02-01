@@ -24,7 +24,7 @@ int main( int argc, char** argv ){ // program obliczania przybliĹźenia PI za p
   int max_liczba_wyrazow=0;
   
 if (rank == 0){
-  printf("Podaj maksymalnÄ liczbÄ wyrazĂłw do obliczenia przybliĹźenia PI\n");
+  printf("Podaj maksymalna liczbe wyrazow do obliczenia przyblizenia PI\n");
   scanf("%d", &max_liczba_wyrazow);
 }
   //  double t = MPI_Wtime();
